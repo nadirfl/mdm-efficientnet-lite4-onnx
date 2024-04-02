@@ -9,11 +9,9 @@ import cv2
 import json
 import base64
 
-app = Flask(__name__,
-            static_url_path='/', 
-            static_folder='web')
+app = Flask(__name__,static_url_path='/',static_folder='web')
 
-ort_session = onnxruntime.InferenceSession("efficientnet-lite4-11.onnx")
+ort_session = onnxruntime.InferenceSession("efficientnet-lite4-11-int8.onnx")
 
 # load the labels text file
 labels = json.load(open("labels_map.txt", "r"))
@@ -92,3 +90,6 @@ def analyze():
         print(r, labels[str(r)], results[0][r])
 
     return resultStr
+
+if __name__ == '__main__':
+    app.run(debug=True)
